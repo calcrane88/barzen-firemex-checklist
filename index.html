@@ -977,7 +977,13 @@
   </div>
 
   <!-- ═══ SUBMIT ═══ -->
-  <button class="submit-btn" onclick="exportSummary()">Generate Summary</button>
+  <button class="submit-btn" onclick="emailToCal()" style="background:#1a6b3f;">
+    <svg viewBox="0 0 24 24" width="18" height="18" fill="white" style="vertical-align:middle;margin-right:6px;"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+    Email Summary to Cal
+  </button>
+  <div style="text-align:center;margin-top:6px;">
+    <button class="submit-btn" onclick="exportSummary()" style="background:var(--orange);font-size:13px;padding:10px;">Or: View Summary On-Screen</button>
+  </div>
 
   <!-- ═══ FOOTER ═══ -->
   <div class="form-footer">
@@ -1146,6 +1152,43 @@ function tryCopy() {
 
 function closeSummary() {
   document.getElementById('summaryOverlay').classList.remove('active');
+}
+
+function emailToCal() {
+  var t = buildSummaryText();
+  var visitDate = document.getElementById('visitDate').value || 'TBC';
+  var subject = 'Firemex Factory Visit Report — ' + visitDate;
+  var to = 'cal@barzenprojects.com.au';
+
+  // Count total photos
+  var photoCount = 0;
+  document.querySelectorAll('input[type="file"]').forEach(function(inp) {
+    if (inp.files) photoCount += inp.files.length;
+  });
+
+  // Add photo reminder to end of body
+  if (photoCount > 0) {
+    t += '\n---\n';
+    t += photoCount + ' photo(s) taken during visit.\n';
+    t += 'REMINDER: Attach photos from camera roll before sending this email.\n';
+  } else {
+    t += '\n---\n';
+    t += 'REMINDER: Attach any photos taken during the visit before sending.\n';
+  }
+
+  // Build mailto link
+  var mailto = 'mailto:' + encodeURIComponent(to)
+    + '?subject=' + encodeURIComponent(subject)
+    + '&body=' + encodeURIComponent(t);
+
+  // Show reminder before opening email
+  if (photoCount > 0) {
+    alert('Email will open now.\n\nYou have ' + photoCount + ' photo(s) — ATTACH THEM from your camera roll before hitting Send.');
+  } else {
+    alert('Email will open now.\n\nRemember to attach any photos from the visit before hitting Send.');
+  }
+
+  window.location.href = mailto;
 }
 
 updateProgress();
