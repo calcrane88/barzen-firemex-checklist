@@ -1,0 +1,1155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=3.0, user-scalable=yes">
+<title>Firemex Factory Visit Checklist — Barzen Projects</title>
+<style>
+  :root {
+    --orange: #e8842c;
+    --dark: #3a3a3a;
+    --label: #444;
+    --muted: #666;
+    --input-bg: #f5f5f5;
+    --border: #ccc;
+    --section-bg: #eee;
+    --white: #ffffff;
+    --green: #2d8f4e;
+    --red: #c0392b;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', Roboto, -apple-system, BlinkMacSystemFont, Arial, sans-serif;
+    background: var(--white);
+    color: var(--dark);
+    padding: 0;
+    -webkit-text-size-adjust: 100%;
+  }
+  .page {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 16px;
+  }
+
+  /* ── HEADER ── */
+  .form-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding-bottom: 10px;
+    border-bottom: 3px solid var(--orange);
+    margin-bottom: 16px;
+  }
+  .logo-area {
+    display: flex;
+    align-items: center;
+    gap: 0;
+  }
+  .logo-b {
+    width: 52px;
+    height: 58px;
+    background: var(--dark);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 2px;
+  }
+  .logo-b span {
+    font-family: Arial, sans-serif;
+    font-size: 42px;
+    font-weight: 800;
+    color: var(--orange);
+    line-height: 1;
+  }
+  .logo-text {
+    display: flex;
+    flex-direction: column;
+  }
+  .logo-text .name {
+    font-family: Arial, sans-serif;
+    font-size: 36px;
+    font-weight: 800;
+    color: var(--dark);
+    line-height: 1;
+    letter-spacing: -0.5px;
+  }
+  .logo-text .sub {
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--dark);
+    letter-spacing: 8px;
+    margin-top: 2px;
+    margin-left: 2px;
+  }
+  .form-title-area {
+    text-align: right;
+    flex-shrink: 0;
+  }
+  .form-title-area h1 {
+    font-family: Arial, sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--dark);
+    line-height: 1.2;
+  }
+  .form-title-area .form-sub {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+  .form-ref {
+    display: inline-block;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 3px 10px;
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 6px;
+  }
+
+  /* ── INSTRUCTION BOX ── */
+  .instruction-box {
+    border-left: 4px solid var(--orange);
+    background: #fef6f0;
+    padding: 10px 14px;
+    margin-bottom: 16px;
+    border-radius: 0 6px 6px 0;
+    font-size: 13px;
+    color: var(--dark);
+    line-height: 1.5;
+  }
+
+  /* ── PROGRESS BAR ── */
+  .progress-bar-wrap {
+    background: var(--input-bg);
+    border-radius: 6px;
+    padding: 12px 14px;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .progress-track {
+    flex: 1;
+    height: 8px;
+    background: #ddd;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: var(--orange);
+    border-radius: 4px;
+    width: 0%;
+    transition: width .3s;
+  }
+  .progress-text {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--dark);
+    white-space: nowrap;
+    min-width: 70px;
+    text-align: right;
+  }
+
+  /* ── SECTIONS ── */
+  .section {
+    margin-bottom: 18px;
+  }
+  .section-header {
+    background: var(--section-bg);
+    border-radius: 20px;
+    padding: 8px 16px;
+    margin-bottom: 12px;
+    border-left: 4px solid var(--orange);
+  }
+  .section-header h2 {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--dark);
+  }
+
+  /* ── FIELD ROWS ── */
+  .field-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0;
+    margin-bottom: 10px;
+  }
+  .field {
+    flex: 1;
+    min-width: 0;
+    margin-bottom: 8px;
+  }
+  .field.half { flex: 0 0 48%; }
+  .field.third { flex: 0 0 31%; }
+  .field-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--label);
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    margin-bottom: 4px;
+    display: block;
+  }
+  .field-input {
+    width: 100%;
+    background: var(--input-bg);
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    padding: 10px;
+    font-size: 14px;
+    font-family: inherit;
+    color: var(--dark);
+    outline: none;
+  }
+  .field-input:focus {
+    border-color: var(--orange);
+    box-shadow: 0 0 0 2px rgba(232,132,44,.15);
+  }
+  select.field-input {
+    -webkit-appearance: none;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23666' fill='none' stroke-width='1.5'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    padding-right: 28px;
+    cursor: pointer;
+  }
+  textarea.field-input {
+    resize: vertical;
+    min-height: 60px;
+  }
+
+  /* ── CHECKBOX ITEMS ── */
+  .check-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px 0;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  .check-item:last-of-type { border-bottom: none; }
+  .check-item input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    min-width: 20px;
+    margin-top: 2px;
+    accent-color: var(--orange);
+    cursor: pointer;
+  }
+  .check-content { flex: 1; }
+  .check-content .check-text {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--dark);
+    line-height: 1.4;
+  }
+  .check-content .check-hint {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 2px;
+    font-style: italic;
+  }
+  .check-item.done .check-text {
+    text-decoration: line-through;
+    color: var(--muted);
+  }
+  .check-notes {
+    width: 100%;
+    background: var(--input-bg);
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    padding: 8px;
+    font-size: 13px;
+    font-family: inherit;
+    color: var(--dark);
+    margin-top: 6px;
+    resize: vertical;
+    min-height: 36px;
+    outline: none;
+  }
+  .check-notes:focus {
+    border-color: var(--orange);
+  }
+
+  /* ── DOOR CARDS ── */
+  .door-card {
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    padding: 14px;
+    margin-bottom: 12px;
+    background: var(--white);
+  }
+  .door-card h3 {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--dark);
+    padding-bottom: 8px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #e0e0e0;
+  }
+
+  /* ── PHOTO CAPTURE ── */
+  .photo-area {
+    margin-top: 8px;
+  }
+  .photo-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--input-bg);
+    border: 1px dashed var(--border);
+    border-radius: 6px;
+    padding: 10px 16px;
+    font-size: 13px;
+    color: var(--orange);
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .photo-label:active {
+    background: #fef6f0;
+  }
+  .photo-label svg {
+    width: 18px;
+    height: 18px;
+    fill: var(--orange);
+  }
+  .photo-thumbs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 8px;
+  }
+  .photo-thumb {
+    width: 56px;
+    height: 56px;
+    object-fit: cover;
+    border-radius: 4px;
+    border: 1px solid var(--border);
+  }
+  .photo-count-text {
+    font-size: 12px;
+    color: var(--green);
+    font-weight: 600;
+    margin-top: 4px;
+  }
+
+  /* ── ACTION TABLE ── */
+  .action-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 8px;
+  }
+  .action-table th {
+    background: var(--section-bg);
+    font-size: 12px;
+    font-weight: 700;
+    text-align: left;
+    padding: 8px;
+    border: 1px solid #ddd;
+    text-transform: uppercase;
+    color: var(--label);
+  }
+  .action-table td {
+    padding: 0;
+    border: 1px solid #ddd;
+    vertical-align: top;
+  }
+  .action-table td input,
+  .action-table td textarea {
+    width: 100%;
+    border: none;
+    padding: 8px;
+    font-size: 13px;
+    font-family: inherit;
+    background: transparent;
+    outline: none;
+    resize: none;
+    min-height: 36px;
+  }
+
+  /* ── SIGN-OFF BOXES ── */
+  .signoff-row {
+    display: flex;
+    gap: 12px;
+    margin-top: 12px;
+  }
+  .signoff-box {
+    flex: 1;
+    background: var(--input-bg);
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    padding: 12px;
+  }
+  .signoff-box h4 {
+    font-size: 12px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--dark);
+  }
+
+  /* ── SUBMIT ── */
+  .submit-btn {
+    display: block;
+    width: 100%;
+    background: var(--orange);
+    color: var(--white);
+    border: none;
+    padding: 14px;
+    border-radius: 6px;
+    font-size: 15px;
+    font-weight: 700;
+    font-family: inherit;
+    cursor: pointer;
+    letter-spacing: .3px;
+    margin-top: 16px;
+  }
+  .submit-btn:active { opacity: .85; }
+
+  /* ── SUMMARY OVERLAY ── */
+  .summary-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.5);
+    z-index: 1000;
+    padding: 16px;
+    overflow-y: auto;
+  }
+  .summary-overlay.active { display: flex; flex-direction: column; }
+  .summary-panel {
+    background: var(--white);
+    border-radius: 8px;
+    max-width: 600px;
+    width: 100%;
+    margin: auto;
+    padding: 20px;
+    position: relative;
+  }
+  .summary-panel h3 {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .summary-panel .hint {
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 12px;
+  }
+  .summary-textarea {
+    width: 100%;
+    min-height: 300px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 12px;
+    font-size: 13px;
+    font-family: 'Courier New', monospace;
+    color: var(--dark);
+    resize: vertical;
+    outline: none;
+  }
+  .summary-textarea:focus { border-color: var(--orange); }
+  .summary-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+  }
+  .summary-actions button {
+    flex: 1;
+    padding: 12px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    border: none;
+  }
+  .btn-copy {
+    background: var(--orange);
+    color: var(--white);
+  }
+  .btn-copy:active { opacity: .85; }
+  .btn-close-summary {
+    background: var(--input-bg);
+    color: var(--dark);
+    border: 1px solid var(--border) !important;
+  }
+  .copy-success {
+    display: none;
+    text-align: center;
+    color: var(--green);
+    font-weight: 600;
+    font-size: 13px;
+    margin-top: 8px;
+  }
+
+  /* ── FOOTER ── */
+  .form-footer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 16px;
+    padding-top: 10px;
+    border-top: 1px solid #e0e0e0;
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 480px) {
+    .form-header { flex-direction: column; gap: 10px; }
+    .form-title-area { text-align: left; }
+    .logo-text .name { font-size: 28px; }
+    .logo-b { width: 42px; height: 48px; }
+    .logo-b span { font-size: 34px; }
+    .logo-text .sub { font-size: 12px; letter-spacing: 6px; }
+    .field.half, .field.third { flex: 0 0 100%; }
+    .signoff-row { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- ═══ HEADER ═══ -->
+  <div class="form-header">
+    <div class="logo-area">
+      <div class="logo-b"><span>B</span></div>
+      <div class="logo-text">
+        <div class="name">arzen</div>
+        <div class="sub">P r o j e c t s</div>
+      </div>
+    </div>
+    <div class="form-title-area">
+      <h1>Factory Visit<br>Checklist</h1>
+      <div class="form-sub">Firemex manufacturing inspection<br>and ITP validation.</div>
+      <div class="form-ref">BP-QA-F01 | Rev 1</div>
+    </div>
+  </div>
+
+  <!-- ═══ INSTRUCTION BOX ═══ -->
+  <div class="instruction-box">
+    Complete all sections during the factory visit. Take photos of each door, the production line, and storage areas. Hit <strong>Copy Summary</strong> at the bottom and send to Cal on completion.
+  </div>
+
+  <!-- ═══ PROGRESS ═══ -->
+  <div class="progress-bar-wrap">
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="progress-text" id="progressText">0 / 24</div>
+  </div>
+
+  <!-- ═══ 1. VISIT DETAILS ═══ -->
+  <div class="section">
+    <div class="section-header"><h2>1. Visit details</h2></div>
+    <div class="field-row">
+      <div class="field half">
+        <span class="field-label">SUPPLIER</span>
+        <input type="text" class="field-input" value="Firemex Custom Doors" readonly style="color:var(--muted);">
+      </div>
+      <div class="field half">
+        <span class="field-label">CONTACT</span>
+        <input type="text" class="field-input" value="Michael Jones — 0434 484 308" readonly style="color:var(--muted);">
+      </div>
+    </div>
+    <div class="field-row">
+      <div class="field half">
+        <span class="field-label">FACTORY ADDRESS</span>
+        <input type="text" class="field-input" value="48 Pentex St, Salisbury QLD" readonly style="color:var(--muted);">
+      </div>
+      <div class="field half">
+        <span class="field-label">JOBS</span>
+        <input type="text" class="field-input" value="BP1034 / BP1036 — NEL" readonly style="color:var(--muted);">
+      </div>
+    </div>
+    <div class="field-row">
+      <div class="field third">
+        <span class="field-label">DATE</span>
+        <input type="date" class="field-input" id="visitDate">
+      </div>
+      <div class="field third">
+        <span class="field-label">ARRIVAL TIME</span>
+        <input type="time" class="field-input" id="visitTime">
+      </div>
+      <div class="field third">
+        <span class="field-label">COMPLETED BY</span>
+        <input type="text" class="field-input" id="completedBy" placeholder="Name">
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ 2. DOOR PRODUCTION STATUS ═══ -->
+  <div class="section" id="sec-doors">
+    <div class="section-header"><h2>2. Door production status</h2></div>
+
+    <div class="door-card">
+      <h3>Door 1</h3>
+      <div class="field-row">
+        <div class="field half">
+          <span class="field-label">DOOR REF / MARK</span>
+          <input type="text" class="field-input door-ref" placeholder="e.g. NVS-D01">
+        </div>
+        <div class="field half">
+          <span class="field-label">CURRENT STAGE</span>
+          <select class="field-input door-stage" onchange="updateProgress()">
+            <option value="">Select...</option>
+            <option>Fabrication</option>
+            <option>Assembly</option>
+            <option>Finishing</option>
+            <option>Ready for Dispatch</option>
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <span class="field-label">DELAYS / CONSTRAINTS</span>
+        <textarea class="field-input" placeholder="Any hold-ups, missing materials..."></textarea>
+      </div>
+      <div class="photo-area">
+        <label class="photo-label" for="p-d1"><svg viewBox="0 0 24 24"><path d="M12 15.2a3.2 3.2 0 100-6.4 3.2 3.2 0 000 6.4z"/><path d="M9 2L7.17 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2h-3.17L15 2H9zm3 15c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"/></svg> Take Photo</label>
+        <input type="file" id="p-d1" accept="image/*" capture="environment" multiple style="display:none" onchange="showThumbs(this)">
+        <div class="photo-thumbs"></div>
+      </div>
+    </div>
+
+    <div class="door-card">
+      <h3>Door 2</h3>
+      <div class="field-row">
+        <div class="field half">
+          <span class="field-label">DOOR REF / MARK</span>
+          <input type="text" class="field-input door-ref" placeholder="e.g. NVS-D02">
+        </div>
+        <div class="field half">
+          <span class="field-label">CURRENT STAGE</span>
+          <select class="field-input door-stage" onchange="updateProgress()">
+            <option value="">Select...</option>
+            <option>Fabrication</option>
+            <option>Assembly</option>
+            <option>Finishing</option>
+            <option>Ready for Dispatch</option>
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <span class="field-label">DELAYS / CONSTRAINTS</span>
+        <textarea class="field-input" placeholder="Any hold-ups, missing materials..."></textarea>
+      </div>
+      <div class="photo-area">
+        <label class="photo-label" for="p-d2"><svg viewBox="0 0 24 24"><path d="M12 15.2a3.2 3.2 0 100-6.4 3.2 3.2 0 000 6.4z"/><path d="M9 2L7.17 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2h-3.17L15 2H9zm3 15c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"/></svg> Take Photo</label>
+        <input type="file" id="p-d2" accept="image/*" capture="environment" multiple style="display:none" onchange="showThumbs(this)">
+        <div class="photo-thumbs"></div>
+      </div>
+    </div>
+
+    <div class="door-card">
+      <h3>Door 3</h3>
+      <div class="field-row">
+        <div class="field half">
+          <span class="field-label">DOOR REF / MARK</span>
+          <input type="text" class="field-input door-ref" placeholder="e.g. SVS-D01">
+        </div>
+        <div class="field half">
+          <span class="field-label">CURRENT STAGE</span>
+          <select class="field-input door-stage" onchange="updateProgress()">
+            <option value="">Select...</option>
+            <option>Fabrication</option>
+            <option>Assembly</option>
+            <option>Finishing</option>
+            <option>Ready for Dispatch</option>
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <span class="field-label">DELAYS / CONSTRAINTS</span>
+        <textarea class="field-input" placeholder="Any hold-ups, missing materials..."></textarea>
+      </div>
+      <div class="photo-area">
+        <label class="photo-label" for="p-d3"><svg viewBox="0 0 24 24"><path d="M12 15.2a3.2 3.2 0 100-6.4 3.2 3.2 0 000 6.4z"/><path d="M9 2L7.17 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2h-3.17L15 2H9zm3 15c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"/></svg> Take Photo</label>
+        <input type="file" id="p-d3" accept="image/*" capture="environment" multiple style="display:none" onchange="showThumbs(this)">
+        <div class="photo-thumbs"></div>
+      </div>
+    </div>
+
+    <div class="door-card">
+      <h3>Door 4</h3>
+      <div class="field-row">
+        <div class="field half">
+          <span class="field-label">DOOR REF / MARK</span>
+          <input type="text" class="field-input door-ref" placeholder="e.g. SVS-D02">
+        </div>
+        <div class="field half">
+          <span class="field-label">CURRENT STAGE</span>
+          <select class="field-input door-stage" onchange="updateProgress()">
+            <option value="">Select...</option>
+            <option>Fabrication</option>
+            <option>Assembly</option>
+            <option>Finishing</option>
+            <option>Ready for Dispatch</option>
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <span class="field-label">DELAYS / CONSTRAINTS</span>
+        <textarea class="field-input" placeholder="Any hold-ups, missing materials..."></textarea>
+      </div>
+      <div class="photo-area">
+        <label class="photo-label" for="p-d4"><svg viewBox="0 0 24 24"><path d="M12 15.2a3.2 3.2 0 100-6.4 3.2 3.2 0 000 6.4z"/><path d="M9 2L7.17 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2h-3.17L15 2H9zm3 15c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"/></svg> Take Photo</label>
+        <input type="file" id="p-d4" accept="image/*" capture="environment" multiple style="display:none" onchange="showThumbs(this)">
+        <div class="photo-thumbs"></div>
+      </div>
+    </div>
+
+    <div class="door-card">
+      <h3>Door 5</h3>
+      <div class="field-row">
+        <div class="field half">
+          <span class="field-label">DOOR REF / MARK</span>
+          <input type="text" class="field-input door-ref" placeholder="e.g. SVS-D03">
+        </div>
+        <div class="field half">
+          <span class="field-label">CURRENT STAGE</span>
+          <select class="field-input door-stage" onchange="updateProgress()">
+            <option value="">Select...</option>
+            <option>Fabrication</option>
+            <option>Assembly</option>
+            <option>Finishing</option>
+            <option>Ready for Dispatch</option>
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <span class="field-label">DELAYS / CONSTRAINTS</span>
+        <textarea class="field-input" placeholder="Any hold-ups, missing materials..."></textarea>
+      </div>
+      <div class="photo-area">
+        <label class="photo-label" for="p-d5"><svg viewBox="0 0 24 24"><path d="M12 15.2a3.2 3.2 0 100-6.4 3.2 3.2 0 000 6.4z"/><path d="M9 2L7.17 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2h-3.17L15 2H9zm3 15c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"/></svg> Take Photo</label>
+        <input type="file" id="p-d5" accept="image/*" capture="environment" multiple style="display:none" onchange="showThumbs(this)">
+        <div class="photo-thumbs"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ═══ 3. MANUFACTURING ITP ═══ -->
+  <div class="section" id="sec-itp">
+    <div class="section-header"><h2>3. Manufacturing ITP</h2></div>
+
+    <div class="check-item">
+      <input type="checkbox" onchange="toggleCheck(this)">
+      <div class="check-content">
+        <div class="check-text">Core testing — asbestos-free compliance confirmed</div>
+        <div class="check-hint">Request test certificate. Confirm testing body and date.</div>
+        <textarea class="check-notes" placeholder="Notes — cert ref, testing body..."></textarea>
+      </div>
+    </div>
+
+    <div class="check-item">
+      <input type="checkbox" onchange="toggleCheck(this)">
+      <div class="check-content">
+        <div class="check-text">Material certifications available per door</div>
+        <div class="check-hint">Steel, Promat core, glass, seals, hardware. Batch numbers linked.</div>
+        <textarea class="check-notes" placeholder="Notes — which certs sighted..."></textarea>
+      </div>
+    </div>
+
+    <div class="check-item">
+      <input type="checkbox" onchange="toggleCheck(this)">
+      <div class="check-content">
+        <div class="check-text">Assembly check procedure documented</div>
+        <div class="check-hint">Written assembly sequence with QA sign-off at each step?</div>
+        <textarea class="check-notes" placeholder="Notes — procedure ref, gaps..."></textarea>
+      </div>
+    </div>
+
+    <div class="check-item">
+      <input type="checkbox" onchange="toggleCheck(this)">
+      <div class="check-content">
+        <div class="check-text">Final inspection process confirmed</div>
+        <div class="check-hint">What gets checked before dispatch? Dimensional, finish, hardware fit.</div>
+        <textarea class="check-notes" placeholder="Notes — inspection details..."></textarea>
+      </div>
+    </div>
+
+    <div class="check-item">
+      <input type="checkbox" onchange="toggleCheck(this)">
+      <div class="check-content">
+        <div class="check-text">Hold points identified and agreed</div>
+        <div class="check-hint">Which steps require stop and sign-off before proceeding?</div>
+        <textarea class="check-notes" placeholder="Notes — hold points agreed..."></textarea>
+      </div>
+    </div>
+
+    <div class="check-item">
+      <input type="checkbox" onchange="toggleCheck(this)">
+      <div class="check-content">
+        <div class="check-text">Witness points identified and agreed</div>
+        <div class="check-hint">Which steps can Barzen / Spark attend to observe?</div>
+        <textarea class="check-notes" placeholder="Notes — witness points agreed..."></textarea>
+      </div>
+    </div>
+
+    <div class="check-item">
+      <input type="checkbox" onchange="toggleCheck(this)">
+      <div class="check-content">
+        <div class="check-text">Documentation pack per door confirmed</div>
+        <div class="check-hint">What certificates and test reports ship with each door?</div>
+        <textarea class="check-notes" placeholder="Notes — doc list per door..."></textarea>
+      </div>
+    </div>
+
+    <div class="check-item">
+      <input type="checkbox" onchange="toggleCheck(this)">
+      <div class="check-content">
+        <div class="check-text">Traceability — batch to door to cert mapping</div>
+        <div class="check-hint">Can they trace raw materials from a finished door? Get an example.</div>
+        <textarea class="check-notes" placeholder="Notes — traceability method, example..."></textarea>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ═══ 4. FACTORY WALKTHROUGH ═══ -->
+  <div class="section" id="sec-factory">
+    <div class="section-header"><h2>4. Factory walkthrough</h2></div>
+
+    <div class="check-item">
+      <input type="checkbox" onchange="toggleCheck(this)">
+      <div class="check-content">
+        <div class="check-text">Actual process matches stated process</div>
+        <div class="check-hint">Walk the line start to finish. Does production match their documentation?</div>
+        <textarea class="check-notes" placeholder="Notes — discrepancies observed..."></textarea>
+      </div>
+    </div>
+
+    <div class="check-item">
+      <input type="checkbox" onchange="toggleCheck(this)">
+      <div class="check-content">
+        <div class="check-text">QA controls observed in practice</div>
+        <div class="check-hint">Are checks happening on the floor or just on paper?</div>
+        <textarea class="check-notes" placeholder="Notes — what was observed..."></textarea>
+      </div>
+    </div>
+
+    <div class="check-item">
+      <input type="checkbox" onchange="toggleCheck(this)">
+      <div class="check-content">
+        <div class="check-text">Compliance labelling / green sticker system</div>
+        <div class="check-hint">Each door should be tagged with compliance status. Verify the system is in use.</div>
+        <textarea class="check-notes" placeholder="Notes — labelling system details..."></textarea>
+      </div>
+    </div>
+
+    <div class="check-item">
+      <input type="checkbox" onchange="toggleCheck(this)">
+      <div class="check-content">
+        <div class="check-text">Storage and handling before dispatch</div>
+        <div class="check-hint">Protected from damage? Correct orientation? Wrapped?</div>
+        <textarea class="check-notes" placeholder="Notes — storage conditions..."></textarea>
+      </div>
+    </div>
+
+    <div class="check-item">
+      <input type="checkbox" onchange="toggleCheck(this)">
+      <div class="check-content">
+        <div class="check-text">Workshop cleanliness and organisation</div>
+        <div class="check-hint">General impression — professional operation or concerns?</div>
+        <textarea class="check-notes" placeholder="Notes — general impressions..."></textarea>
+      </div>
+    </div>
+
+    <div class="field" style="margin-top:10px;">
+      <span class="field-label">FACTORY FLOOR &amp; STORAGE PHOTOS</span>
+      <div class="photo-area">
+        <label class="photo-label" for="p-factory"><svg viewBox="0 0 24 24"><path d="M12 15.2a3.2 3.2 0 100-6.4 3.2 3.2 0 000 6.4z"/><path d="M9 2L7.17 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2h-3.17L15 2H9zm3 15c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"/></svg> Take Photos</label>
+        <input type="file" id="p-factory" accept="image/*" capture="environment" multiple style="display:none" onchange="showThumbs(this)">
+        <div class="photo-thumbs"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ═══ 5. PROGRAMME ALIGNMENT ═══ -->
+  <div class="section" id="sec-programme">
+    <div class="section-header"><h2>5. Programme alignment</h2></div>
+
+    <div class="check-item">
+      <input type="checkbox" onchange="toggleCheck(this)">
+      <div class="check-content">
+        <div class="check-text">Current lead time confirmed</div>
+        <div class="check-hint">Weeks remaining to complete all 5 doors.</div>
+        <textarea class="check-notes" placeholder="Lead time stated..."></textarea>
+      </div>
+    </div>
+
+    <div class="check-item">
+      <input type="checkbox" onchange="toggleCheck(this)">
+      <div class="check-content">
+        <div class="check-text">Capacity constraints identified</div>
+        <div class="check-hint">Other jobs competing for shop time? Staffing issues?</div>
+        <textarea class="check-notes" placeholder="Constraints noted..."></textarea>
+      </div>
+    </div>
+
+    <div class="check-item">
+      <input type="checkbox" onchange="toggleCheck(this)">
+      <div class="check-content">
+        <div class="check-text">Delivery sequencing agreed (May / June)</div>
+        <div class="check-hint">Which doors ship first? Committed dates per door if possible.</div>
+        <textarea class="check-notes" placeholder="Sequence and dates..."></textarea>
+      </div>
+    </div>
+
+    <div class="check-item">
+      <input type="checkbox" onchange="toggleCheck(this)">
+      <div class="check-content">
+        <div class="check-text">Programme risks flagged</div>
+        <div class="check-hint">Anything that could push dates — material supply, testing, third-party?</div>
+        <textarea class="check-notes" placeholder="Risks noted..."></textarea>
+      </div>
+    </div>
+
+    <div class="field" style="margin-top:8px;">
+      <span class="field-label">OVERALL CONFIDENCE IN DELIVERY DATES</span>
+      <select class="field-input" id="confSelect">
+        <option value="">Select...</option>
+        <option>HIGH — On track, no concerns</option>
+        <option>MEDIUM — Minor risks, manageable</option>
+        <option>LOW — Significant risk to programme</option>
+      </select>
+    </div>
+    <div class="field" style="margin-top:8px;">
+      <span class="field-label">REASONING</span>
+      <textarea class="field-input" placeholder="Why this confidence level..."></textarea>
+    </div>
+  </div>
+
+  <!-- ═══ 6. ACTIONS AND FOLLOW-UP ═══ -->
+  <div class="section">
+    <div class="section-header"><h2>6. Actions and follow-up</h2></div>
+    <table class="action-table">
+      <thead>
+        <tr><th style="width:60%;">Action required</th><th style="width:22%;">Owner</th><th style="width:18%;">Due date</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><input type="text"></td><td><input type="text"></td><td><input type="date"></td></tr>
+        <tr><td><input type="text"></td><td><input type="text"></td><td><input type="date"></td></tr>
+        <tr><td><input type="text"></td><td><input type="text"></td><td><input type="date"></td></tr>
+        <tr><td><input type="text"></td><td><input type="text"></td><td><input type="date"></td></tr>
+        <tr><td><input type="text"></td><td><input type="text"></td><td><input type="date"></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ═══ 7. OVERALL ASSESSMENT ═══ -->
+  <div class="section">
+    <div class="section-header"><h2>7. Overall assessment and sign-off</h2></div>
+    <div class="field">
+      <span class="field-label">ITP STATUS</span>
+      <select class="field-input" id="itpStatus">
+        <option value="">Select...</option>
+        <option>AGREED — ITP signed off by both parties</option>
+        <option>DRAFT — Requires further input from Firemex</option>
+        <option>NOT STARTED — ITP not available or not discussed</option>
+      </select>
+    </div>
+    <div class="field" style="margin-top:8px;">
+      <span class="field-label">GENERAL OBSERVATIONS</span>
+      <textarea class="field-input" style="min-height:100px;" placeholder="Overall impressions, anything Cal needs to know..."></textarea>
+    </div>
+
+    <div class="signoff-row">
+      <div class="signoff-box">
+        <h4>Barzen representative</h4>
+        <span class="field-label">NAME</span>
+        <input type="text" class="field-input" style="margin-bottom:6px;">
+        <span class="field-label">DATE</span>
+        <input type="date" class="field-input">
+      </div>
+      <div class="signoff-box">
+        <h4>Firemex representative</h4>
+        <span class="field-label">NAME</span>
+        <input type="text" class="field-input" style="margin-bottom:6px;">
+        <span class="field-label">DATE</span>
+        <input type="date" class="field-input">
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ SUBMIT ═══ -->
+  <button class="submit-btn" onclick="exportSummary()">Generate Summary</button>
+
+  <!-- ═══ FOOTER ═══ -->
+  <div class="form-footer">
+    <span>Barzen Projects</span>
+    <span>Controlled form</span>
+    <span>Page 1 of 1</span>
+  </div>
+
+</div>
+
+<!-- ═══ SUMMARY OVERLAY ═══ -->
+<div class="summary-overlay" id="summaryOverlay">
+  <div class="summary-panel">
+    <h3>Visit Summary</h3>
+    <div class="hint">Tap the text below, Select All, then Copy. Paste into a message to Cal.</div>
+    <textarea class="summary-textarea" id="summaryOutput" readonly></textarea>
+    <div class="summary-actions">
+      <button class="btn-copy" onclick="tryCopy()">Copy to Clipboard</button>
+      <button class="btn-close-summary" onclick="closeSummary()">Close</button>
+    </div>
+    <div class="copy-success" id="copySuccess">Copied — paste into a message to Cal.</div>
+  </div>
+</div>
+
+<script>
+function showThumbs(input) {
+  var container = input.parentElement.querySelector('.photo-thumbs');
+  container.innerHTML = '';
+  var files = input.files;
+  if (!files || !files.length) return;
+  for (var i = 0; i < files.length; i++) {
+    (function(file) {
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        var img = document.createElement('img');
+        img.src = e.target.result;
+        img.className = 'photo-thumb';
+        container.appendChild(img);
+      };
+      reader.readAsDataURL(file);
+    })(files[i]);
+  }
+  var existing = input.parentElement.querySelector('.photo-count-text');
+  if (existing) existing.remove();
+  var c = document.createElement('div');
+  c.className = 'photo-count-text';
+  c.textContent = files.length + ' photo' + (files.length > 1 ? 's' : '') + ' attached';
+  input.parentElement.appendChild(c);
+}
+
+function toggleCheck(cb) {
+  cb.closest('.check-item').classList.toggle('done', cb.checked);
+  updateProgress();
+}
+
+function updateProgress() {
+  var total = 0, done = 0;
+  document.querySelectorAll('.door-stage').forEach(function(s) { total++; if (s.value) done++; });
+  document.querySelectorAll('.check-item input[type="checkbox"]').forEach(function(cb) { total++; if (cb.checked) done++; });
+  var pct = total > 0 ? Math.round((done / total) * 100) : 0;
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressText').textContent = done + ' / ' + total;
+}
+
+function buildSummaryText() {
+  var t = 'FIREMEX FACTORY VISIT SUMMARY\n';
+  t += 'Date: ' + (document.getElementById('visitDate').value || '___') + '\n';
+  t += 'Completed by: ' + (document.getElementById('completedBy').value || '___') + '\n';
+  t += '================================\n\n';
+
+  t += '1. DOOR PRODUCTION STATUS\n\n';
+  document.querySelectorAll('.door-card').forEach(function(card, i) {
+    var ref = card.querySelector('.door-ref').value || '(no ref)';
+    var stage = card.querySelector('.door-stage').value || '(not recorded)';
+    var notes = card.querySelector('textarea').value || '';
+    var pi = card.querySelector('input[type="file"]');
+    var pc = pi && pi.files ? pi.files.length : 0;
+    t += 'Door ' + (i+1) + ': ' + ref + ' — ' + stage + '\n';
+    if (notes) t += '  Notes: ' + notes + '\n';
+    if (pc > 0) t += '  Photos: ' + pc + '\n';
+    t += '\n';
+  });
+
+  var sections = [
+    {id: 'sec-itp', title: '2. MANUFACTURING ITP'},
+    {id: 'sec-factory', title: '3. FACTORY WALKTHROUGH'},
+    {id: 'sec-programme', title: '4. PROGRAMME ALIGNMENT'}
+  ];
+  sections.forEach(function(sec) {
+    t += sec.title + '\n\n';
+    document.querySelectorAll('#' + sec.id + ' .check-item').forEach(function(item) {
+      var cb = item.querySelector('input[type="checkbox"]');
+      var txt = item.querySelector('.check-text').textContent;
+      var notes = item.querySelector('.check-notes');
+      t += (cb.checked ? '[x] ' : '[ ] ') + txt + '\n';
+      if (notes && notes.value) t += '  ' + notes.value + '\n';
+    });
+    t += '\n';
+  });
+
+  var conf = document.getElementById('confSelect');
+  if (conf.value) t += 'Delivery confidence: ' + conf.value + '\n\n';
+
+  t += '5. ACTIONS\n\n';
+  document.querySelectorAll('.action-table tbody tr').forEach(function(row, i) {
+    var cells = row.querySelectorAll('input');
+    if (cells[0].value) {
+      t += (i+1) + '. ' + cells[0].value;
+      if (cells[1].value) t += ' — ' + cells[1].value;
+      if (cells[2].value) t += ' — due ' + cells[2].value;
+      t += '\n';
+    }
+  });
+
+  t += '\n6. OVERALL\n\n';
+  var itp = document.getElementById('itpStatus');
+  t += 'ITP Status: ' + (itp.value || '(not set)') + '\n';
+  var secCards = document.querySelectorAll('.section');
+  var lastSec = secCards[secCards.length - 1];
+  var obsTa = lastSec.querySelector('textarea');
+  if (obsTa && obsTa.value) t += 'Notes: ' + obsTa.value + '\n';
+
+  return t;
+}
+
+function exportSummary() {
+  var t = buildSummaryText();
+  var output = document.getElementById('summaryOutput');
+  output.value = t;
+  document.getElementById('summaryOverlay').classList.add('active');
+  document.getElementById('copySuccess').style.display = 'none';
+  // Auto-select text for easy copying
+  setTimeout(function() { output.focus(); output.select(); }, 100);
+}
+
+function tryCopy() {
+  var output = document.getElementById('summaryOutput');
+  var text = output.value;
+  // Try clipboard API first (works on HTTPS)
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(function() {
+      document.getElementById('copySuccess').style.display = 'block';
+    }).catch(function() {
+      // Fall back to execCommand
+      output.focus();
+      output.select();
+      try {
+        document.execCommand('copy');
+        document.getElementById('copySuccess').style.display = 'block';
+      } catch(e) {
+        // Last resort — text is already selected, user can manually copy
+        alert('Text is selected — long-press and tap Copy.');
+      }
+    });
+  } else {
+    output.focus();
+    output.select();
+    try {
+      document.execCommand('copy');
+      document.getElementById('copySuccess').style.display = 'block';
+    } catch(e) {
+      alert('Text is selected — long-press and tap Copy.');
+    }
+  }
+}
+
+function closeSummary() {
+  document.getElementById('summaryOverlay').classList.remove('active');
+}
+
+updateProgress();
+</script>
+
+</body>
+</html>
